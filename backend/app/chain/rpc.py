@@ -55,7 +55,7 @@ class RPCClient:
     async def get_approval_logs(
         self, 
         address: str, 
-        from_block: str = "earliest",
+        from_block: str = "0x0",  # Block 0
         to_block: str = "latest"
     ) -> dict:
         """
@@ -64,19 +64,41 @@ class RPCClient:
         """
         padded_address = self.pad_address(address)
         
-        # ERC20/ERC721 Approval events (owner is topic1)
-        approval_logs = await self._call("eth_getLogs", [{
-            "topics": [APPROVAL_ERC20, padded_address],
-            "fromBlock": from_block,
-            "toBlock": to_block
-        }])
+        # Use a reasonable block range to avoid RPC timeouts
+        # Most RPCs limit "earliest" queries - use last ~2 years of blocks
+        # (~7200 blocks/day * 730 days = ~5.2M blocks)
+        try:
+            current_block = await self._call("eth_blockNumber", [])
+            current_block_int = int(current_block, 16)
+            # Go back ~2 years or use 0 if chain is newer
+            from_block = hex(max(0, current_block_int - 5_000_000))
+        except Exception:
+            from_block = "0x0"
         
-        # ApprovalForAll events (owner is topic1)
-        approval_for_all_logs = await self._call("eth_getLogs", [{
-            "topics": [APPROVAL_FOR_ALL, padded_address],
-            "fromBlock": from_block,
-            "toBlock": to_block
-        }])
+        approval_logs = []
+        approval_for_all_logs = []
+        
+        try:
+            # ERC20/ERC721 Approval events (owner is topic1)
+            approval_logs = await self._call("eth_getLogs", [{
+                "topics": [APPROVAL_ERC20, padded_address],
+                "fromBlock": from_block,
+                "toBlock": to_block
+            }])
+        except Exception as e:
+            print(f"Error fetching approval logs: {e}")
+            approval_logs = []
+        
+        try:
+            # ApprovalForAll events (owner is topic1)
+            approval_for_all_logs = await self._call("eth_getLogs", [{
+                "topics": [APPROVAL_FOR_ALL, padded_address],
+                "fromBlock": from_block,
+                "toBlock": to_block
+            }])
+        except Exception as e:
+            print(f"Error fetching ApprovalForAll logs: {e}")
+            approval_for_all_logs = []
         
         return {
             "approvals": approval_logs or [],

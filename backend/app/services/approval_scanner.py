@@ -98,8 +98,13 @@ class ApprovalScanner:
         """
         address = address.lower()
         
-        # Step 1: Fetch all approval logs
-        raw_logs = await self.rpc_client.get_approval_logs(address)
+        try:
+            # Step 1: Fetch all approval logs
+            raw_logs = await self.rpc_client.get_approval_logs(address)
+        except Exception as e:
+            print(f"Error fetching approval logs: {e}")
+            # Return empty list if RPC fails
+            return []
         
         # Step 2: Parse logs into approval events
         parsed_approvals = self.log_parser.parse_approval_logs(raw_logs)
@@ -109,19 +114,28 @@ class ApprovalScanner:
         
         # Step 4: Verify current allowances on-chain and enrich data
         active_approvals = []
-        current_block = await self.rpc_client.get_block_number()
+        
+        try:
+            current_block = await self.rpc_client.get_block_number()
+        except Exception:
+            current_block = 0
+            
         current_time = int(time.time())
         
         for token_address, spenders in current_state.items():
             for spender_address, parsed in spenders.items():
-                approval = await self._verify_and_enrich(
-                    parsed, 
-                    address,
-                    current_block,
-                    current_time
-                )
-                if approval:
-                    active_approvals.append(approval)
+                try:
+                    approval = await self._verify_and_enrich(
+                        parsed, 
+                        address,
+                        current_block,
+                        current_time
+                    )
+                    if approval:
+                        active_approvals.append(approval)
+                except Exception as e:
+                    print(f"Error verifying approval {token_address} -> {spender_address}: {e}")
+                    continue
         
         # Sort by risk factors (unlimited first, then by age)
         active_approvals.sort(

@@ -190,6 +190,64 @@ function ResultsContent() {
                     </div>
                 </section>
 
+                {/* What We Scanned section */}
+                <section className={styles.scanInfoSection}>
+                    <h2 className={styles.sectionTitle}>What We Analyzed</h2>
+                    <div className={styles.scanInfoGrid}>
+                        <div className={styles.scanInfoCard}>
+                            <div className={styles.scanInfoIcon}>🔐</div>
+                            <h3>Token Approvals</h3>
+                            <p>Scanned ERC-20 token approvals that allow third parties to spend your tokens</p>
+                        </div>
+                        <div className={styles.scanInfoCard}>
+                            <div className={styles.scanInfoIcon}>🖼️</div>
+                            <h3>NFT Permissions</h3>
+                            <p>Checked ERC-721 & ERC-1155 approvals including "Approval for All" permissions</p>
+                        </div>
+                        <div className={styles.scanInfoCard}>
+                            <div className={styles.scanInfoIcon}>⚡</div>
+                            <h3>Live Verification</h3>
+                            <p>Verified current on-chain state to filter out already revoked permissions</p>
+                        </div>
+                        <div className={styles.scanInfoCard}>
+                            <div className={styles.scanInfoIcon}>🎯</div>
+                            <h3>Risk Analysis</h3>
+                            <p>Scored each approval based on allowance size, spender type, and age</p>
+                        </div>
+                    </div>
+
+                    <div className={styles.riskFactors}>
+                        <h3>Risk Factors We Check</h3>
+                        <div className={styles.factorsList}>
+                            <div className={styles.factor}>
+                                <span className={styles.factorWeight}>+40</span>
+                                <span className={styles.factorName}>Unlimited Allowance</span>
+                                <span className={styles.factorDesc}>Token can be drained completely</span>
+                            </div>
+                            <div className={styles.factor}>
+                                <span className={styles.factorWeight}>+35</span>
+                                <span className={styles.factorName}>EOA Spender</span>
+                                <span className={styles.factorDesc}>Spender is a wallet, not a contract</span>
+                            </div>
+                            <div className={styles.factor}>
+                                <span className={styles.factorWeight}>+25</span>
+                                <span className={styles.factorName}>Approval For All</span>
+                                <span className={styles.factorDesc}>Can transfer any NFT in collection</span>
+                            </div>
+                            <div className={styles.factor}>
+                                <span className={styles.factorWeight}>+20</span>
+                                <span className={styles.factorName}>Unverified Contract</span>
+                                <span className={styles.factorDesc}>Source code not verified on explorer</span>
+                            </div>
+                            <div className={styles.factor}>
+                                <span className={styles.factorWeight}>+15</span>
+                                <span className={styles.factorName}>Old Approval</span>
+                                <span className={styles.factorDesc}>Permission granted 6+ months ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 {/* Approvals section */}
                 {result.summary.total_approvals > 0 && (
                     <section className={styles.approvalsSection}>
@@ -334,13 +392,30 @@ function LoadingState({ address }: { address: string }) {
             <div className={styles.loadingContainer}>
                 <div className={styles.loadingSpinner} />
                 <h2>Scanning wallet...</h2>
-                <p>{address.slice(0, 6)}...{address.slice(-4)}</p>
+                <p className={styles.loadingAddress}>
+                    {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "Loading..."}
+                </p>
                 <div className={styles.loadingSteps}>
                     <div className={styles.loadingStep}>
-                        <span className="spinner" />
-                        Fetching approval events
+                        <span className={styles.stepIcon}>🔍</span>
+                        <span>Fetching ERC-20 approval events</span>
+                    </div>
+                    <div className={styles.loadingStep}>
+                        <span className={styles.stepIcon}>🖼️</span>
+                        <span>Scanning NFT permissions</span>
+                    </div>
+                    <div className={styles.loadingStep}>
+                        <span className={styles.stepIcon}>⚡</span>
+                        <span>Verifying current allowances on-chain</span>
+                    </div>
+                    <div className={styles.loadingStep}>
+                        <span className={styles.stepIcon}>🎯</span>
+                        <span>Calculating risk scores</span>
                     </div>
                 </div>
+                <p className={styles.loadingNote}>
+                    This may take a few seconds depending on wallet activity
+                </p>
             </div>
         </main>
     );
