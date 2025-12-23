@@ -195,22 +195,30 @@ function ResultsContent() {
                     <h2 className={styles.sectionTitle}>What We Analyzed</h2>
                     <div className={styles.scanInfoGrid}>
                         <div className={styles.scanInfoCard}>
-                            <div className={styles.scanInfoIcon}>🔐</div>
+                            <div className={styles.scanInfoIcon}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </div>
                             <h3>Token Approvals</h3>
                             <p>Scanned ERC-20 token approvals that allow third parties to spend your tokens</p>
                         </div>
                         <div className={styles.scanInfoCard}>
-                            <div className={styles.scanInfoIcon}>🖼️</div>
+                            <div className={styles.scanInfoIcon}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            </div>
                             <h3>NFT Permissions</h3>
                             <p>Checked ERC-721 & ERC-1155 approvals including "Approval for All" permissions</p>
                         </div>
                         <div className={styles.scanInfoCard}>
-                            <div className={styles.scanInfoIcon}>⚡</div>
+                            <div className={styles.scanInfoIcon}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            </div>
                             <h3>Live Verification</h3>
                             <p>Verified current on-chain state to filter out already revoked permissions</p>
                         </div>
                         <div className={styles.scanInfoCard}>
-                            <div className={styles.scanInfoIcon}>🎯</div>
+                            <div className={styles.scanInfoIcon}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                            </div>
                             <h3>Risk Analysis</h3>
                             <p>Scored each approval based on allowance size, spender type, and age</p>
                         </div>
@@ -258,21 +266,24 @@ function ResultsContent() {
                                 onClick={() => setActiveTab("dangerous")}
                                 disabled={result.approvals.dangerous.length === 0}
                             >
-                                🔴 Dangerous ({result.summary.dangerous})
+                                <span className={styles.dotDanger}></span>
+                                Dangerous ({result.summary.dangerous})
                             </button>
                             <button
                                 className={`${styles.tab} ${activeTab === "risky" ? styles.tabActive : ""} ${styles.tabRisky}`}
                                 onClick={() => setActiveTab("risky")}
                                 disabled={result.approvals.risky.length === 0}
                             >
-                                🟡 Risky ({result.summary.risky})
+                                <span className={styles.dotRisky}></span>
+                                Risky ({result.summary.risky})
                             </button>
                             <button
                                 className={`${styles.tab} ${activeTab === "safe" ? styles.tabActive : ""} ${styles.tabSafe}`}
                                 onClick={() => setActiveTab("safe")}
                                 disabled={result.approvals.safe.length === 0}
                             >
-                                🟢 Safe ({result.summary.safe})
+                                <span className={styles.dotSafe}></span>
+                                Safe ({result.summary.safe})
                             </button>
                         </div>
 
@@ -302,7 +313,8 @@ function ResultsContent() {
                             navigator.clipboard.writeText(text);
                         }}
                     >
-                        📋 Copy to clipboard
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                        Copy Result
                     </button>
                 </section>
             </div>
@@ -358,7 +370,8 @@ function ApprovalCard({ approval }: { approval: Approval }) {
                 <div className="risk-reasons">
                     {approval.risk_reasons.map((reason, i) => (
                         <span key={i} className="risk-tag">
-                            ⚠️ {reason}
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            {reason}
                         </span>
                     ))}
                 </div>
@@ -397,19 +410,27 @@ function LoadingState({ address }: { address: string }) {
                 </p>
                 <div className={styles.loadingSteps}>
                     <div className={styles.loadingStep}>
-                        <span className={styles.stepIcon}>🔍</span>
+                        <span className={styles.stepIcon}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </span>
                         <span>Fetching ERC-20 approval events</span>
                     </div>
                     <div className={styles.loadingStep}>
-                        <span className={styles.stepIcon}>🖼️</span>
+                        <span className={styles.stepIcon}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        </span>
                         <span>Scanning NFT permissions</span>
                     </div>
                     <div className={styles.loadingStep}>
-                        <span className={styles.stepIcon}>⚡</span>
+                        <span className={styles.stepIcon}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        </span>
                         <span>Verifying current allowances on-chain</span>
                     </div>
                     <div className={styles.loadingStep}>
-                        <span className={styles.stepIcon}>🎯</span>
+                        <span className={styles.stepIcon}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                        </span>
                         <span>Calculating risk scores</span>
                     </div>
                 </div>
@@ -431,7 +452,9 @@ function ErrorState({
     return (
         <main className={styles.main}>
             <div className={styles.errorContainer}>
-                <div className={styles.errorIcon}>❌</div>
+                <div className={styles.errorIcon}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                </div>
                 <h2>Scan Failed</h2>
                 <p>{error || "Something went wrong"}</p>
                 <button className="btn btn-primary" onClick={onRetry}>

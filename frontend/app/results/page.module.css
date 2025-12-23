@@ -221,6 +221,31 @@
     gap: 16px;
 }
 
+.dotDanger,
+.dotRisky,
+.dotSafe {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.dotDanger {
+    background-color: var(--danger);
+    box-shadow: 0 0 8px var(--danger-bg);
+}
+
+.dotRisky {
+    background-color: var(--risky);
+    box-shadow: 0 0 8px var(--risky-bg);
+}
+
+.dotSafe {
+    background-color: var(--safe);
+    box-shadow: 0 0 8px var(--safe-bg);
+}
+
 .emptyState {
     text-align: center;
     padding: 48px;
@@ -381,8 +406,15 @@
 }
 
 .scanInfoIcon {
-    font-size: 2rem;
-    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-tertiary);
+    border-radius: 50%;
+    margin-bottom: 16px;
+    color: var(--accent-primary);
 }
 
 .scanInfoCard h3 {
