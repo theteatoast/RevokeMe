@@ -1,0 +1,190 @@
+.main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 24px;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    width: 100%;
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Logo */
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 48px;
+}
+
+.logo {
+    color: var(--accent-primary);
+}
+
+.logoText {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* Title */
+.title {
+    margin-bottom: 20px;
+}
+
+.gradient {
+    background: linear-gradient(135deg, var(--accent-primary), #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    max-width: 520px;
+    margin-bottom: 48px;
+}
+
+/* Search form */
+.searchForm {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 24px;
+}
+
+.inputWrapper {
+    display: flex;
+    gap: 12px;
+    padding: 6px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s ease;
+}
+
+.inputWrapper:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.searchInput {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 14px 16px;
+    font-size: 1rem;
+}
+
+.searchInput:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.inputError {
+    color: var(--danger);
+}
+
+.scanButton {
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+}
+
+.error {
+    margin-top: 12px;
+    color: var(--danger);
+    font-size: 0.875rem;
+}
+
+/* Trust message */
+.trustMessage {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 64px;
+}
+
+.trustMessage svg {
+    color: var(--safe);
+}
+
+/* Features */
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+.feature {
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.feature:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+}
+
+.featureIcon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.feature h3 {
+    margin-bottom: 4px;
+    font-size: 1rem;
+}
+
+.feature p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .main {
+        padding: 40px 16px;
+    }
+
+    .inputWrapper {
+        flex-direction: column;
+    }
+
+    .scanButton {
+        width: 100%;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
